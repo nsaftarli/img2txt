@@ -7,3 +7,11 @@ dist
 .ropeproject
 venv
 test
+env3
+env
+rgb_input
+rgb_input2
+.DS_Store
+ascii_output/
+example/
+example/.DS_Store

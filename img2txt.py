@@ -114,27 +114,31 @@ def load_and_resize_image(imgname, antialias, maxLen, aspectRatio):
         img = img.convert('RGBA')
 
     # need to change the size of the image?
-    if maxLen is not None or aspectRatio != 1.0:
+    # if maxLen is not None or aspectRatio != 1.0:
 
-        native_width, native_height = img.size
+    #     native_width, native_height = img.size
 
-        new_width = native_width
-        new_height = native_height
+    #     new_width = native_width
+    #     new_height = native_height
 
-        # First apply aspect ratio change (if any) - just need to adjust one axis
-        # so we'll do the height.
-        if aspectRatio != 1.0:
-            new_height = int(float(aspectRatio) * new_height)
+    #     # First apply aspect ratio change (if any) - just need to adjust one axis
+    #     # so we'll do the height.
+    #     if aspectRatio != 1.0:
+    #         new_height = int(float(aspectRatio) * new_height)
 
-        # Now isotropically resize up or down (preserving aspect ratio) such that 
-        # longer side of image is maxLen 
-        if maxLen is not None:
-            rate = float(maxLen) / max(new_width, new_height)
-            new_width = int(rate * new_width)  
-            new_height = int(rate * new_height)
+    #     # Now isotropically resize up or down (preserving aspect ratio) such that 
+    #     # longer side of image is maxLen 
+    #     if maxLen is not None:
+    #         rate = float(maxLen) / max(new_width, new_height)
+    #         new_width = int(rate * new_width)  
+    #         new_height = int(rate * new_height)
 
-        if native_width != new_width or native_height != new_height:
-            img = img.resize((new_width, new_height), Image.ANTIALIAS if antialias else Image.NEAREST)
+    #     if native_width != new_width or native_height != new_height:
+    #         img = img.resize((new_width, new_height), Image.ANTIALIAS if antialias else Image.NEAREST)
+
+    # else:
+    img = img.resize((300,300))
+    img.show()
 
     return img
 
@@ -221,28 +225,15 @@ def dither_image_to_web_palette(img, bgcolor):
 
 
 
-if __name__ == '__main__':
-
-    dct = docopt(__doc__)
-
-    imgname = dct['<imgfile>']
-
-    maxLen = dct['--maxLen']
-
-    clr = dct['--color']
-
-    do_ansi = dct['--ansi']
-
-    fontSize = dct['--fontSize']
-
-    bgcolor = dct['--bgcolor']
-
-    antialias = dct['--antialias']
-
-    dither = dct['--dither']
-
-    target_aspect_ratio = dct['--targetAspect']
-
+def main(imgname):
+    maxLen = 150
+    clr = False
+    do_ansi = False
+    fontSize = None
+    bgcolor = None
+    antialias = False
+    dither = False
+    target_aspect_ratio = None
     try:
         maxLen = float(maxLen)
     except:
@@ -318,33 +309,7 @@ if __name__ == '__main__':
             string = generate_grayscale_for_image(
                 pixel, width, height, bgcolor)
 
-        # wrap with html
-
-        template = """<!DOCTYPE HTML>
-        <html>
-        <head>
-          <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-          <style type="text/css" media="all">
-            pre {
-              white-space: pre-wrap;       /* css-3 */
-              white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
-              white-space: -pre-wrap;      /* Opera 4-6 */
-              white-space: -o-pre-wrap;    /* Opera 7 */
-              word-wrap: break-word;       /* Internet Explorer 5.5+ */
-              font-family: 'Menlo', 'Courier New', 'Consola';
-              line-height: 1.0;
-              font-size: %dpx;
-            }
-          </style>
-        </head>
-        <body>
-          <pre>%s</pre>
-        </body>
-        </html>
-        """
-
-        html = template % (fontSize, string)
-        sys.stdout.write(html)
-
+        sys.stdout.write(string)
 
     sys.stdout.flush()
+    return string 
