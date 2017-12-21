@@ -137,8 +137,21 @@ def load_and_resize_image(imgname, antialias, maxLen, aspectRatio):
     #         img = img.resize((new_width, new_height), Image.ANTIALIAS if antialias else Image.NEAREST)
 
     # else:
-    img = img.resize((300,300))
+
+    width,height = img.size
+    crop_constant = 300
+
+    left = (width - crop_constant) / 2
+    top = (height - crop_constant) / 2
+    right = (width + crop_constant) / 2
+    bottom = (height + crop_constant) / 2
+    img = img.crop((left, top, right, bottom))
+
+
+    # img = img.resize((300,300))
     img.show()
+
+
 
     return img
 
