@@ -138,18 +138,18 @@ def load_and_resize_image(imgname, antialias, maxLen, aspectRatio):
 
     # else:
 
-    width,height = img.size
-    crop_constant = 300
+    # width,height = img.size
+    # crop_constant = 300
 
-    left = (width - crop_constant) / 2
-    top = (height - crop_constant) / 2
-    right = (width + crop_constant) / 2
-    bottom = (height + crop_constant) / 2
-    img = img.crop((left, top, right, bottom))
+    # left = (width - crop_constant) / 2
+    # top = (height - crop_constant) / 2
+    # right = (width + crop_constant) / 2
+    # bottom = (height + crop_constant) / 2
+    # img = img.crop((left, top, right, bottom))
 
 
     # img = img.resize((300,300))
-    img.show()
+    # img.show()
 
 
 
