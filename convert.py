@@ -34,7 +34,6 @@ def to_ascii(in_dir,out_dir):
         f.close()
 
 
-        # print(buff)
         i+=1
 
     
